@@ -7,6 +7,10 @@ android {
     namespace 'com.example.chaebi'
     compileSdk 33
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.example.chaebi"
         minSdk 24
