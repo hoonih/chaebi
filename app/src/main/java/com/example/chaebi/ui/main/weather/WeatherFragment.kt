@@ -46,25 +46,24 @@ class WeatherFragment : Fragment() {
     }
 
     private fun getBaseTime(h : String, m : String) : String {
-        var result = ""
+        Log.d("test", "$h $m")
+        var setresult : Int
+        var clockresult = ""
 
-        // 45분 전이면
-        if (m.toInt() < 45) {
-            // 0시면 2330
-            if (h == "00") result = "2330"
-            // 아니면 1시간 전 날씨 정보 부르기
-            else {
-                var resultH = h.toInt() - 1
-                // 1자리면 0 붙여서 2자리로 만들기
-                if (resultH < 10) result = "0" + resultH + "30"
-                // 2자리면 그대로
-                else result = resultH.toString() + "30"
-            }
+        setresult = h.toInt()
+        if (m.toInt() < 10) {
+            setresult = h.toInt() - 1
         }
-        // 45분 이후면 바로 정보 받아오기
-        else result = h + "30"
 
-        return result
+        setresult -= (setresult + 1) % 3
+
+        if (setresult / 10 == 0)
+            clockresult = "0" + setresult.toString() + "00"
+        else
+            clockresult = setresult.toString() + "00"
+
+        Log.d("test", "$clockresult")
+        return clockresult
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,60 +76,73 @@ class WeatherFragment : Fragment() {
         val cal = Calendar.getInstance()
         base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time) // 현재 날짜
         val timeH = SimpleDateFormat("HH", Locale.getDefault()).format(cal.time) // 현재 시각
-        val timeM = SimpleDateFormat("HH", Locale.getDefault()).format(cal.time) // 현재 분
+        val timeM = SimpleDateFormat("mm", Locale.getDefault()).format(cal.time) // 현재 분
         // API 가져오기 적당하게 변환
         base_time = getBaseTime(timeH, timeM)
         // 현재 시각이 00시이고 45분 이하여서 baseTime이 2330이면 어제 정보 받아오기
-        if (timeH == "00" && base_time == "2330") {
+        if (timeH == "00" && base_time == "0-100") {
             cal.add(Calendar.DATE, -1).toString()
             base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
+            base_time = "2300"
         }
 
-
-        postservice.GetWeather(60, 1, "JSON", base_date, base_time, nx, ny)
+        postservice.GetWeather(140, 1, "JSON", base_date, base_time, nx, ny)
             .enqueue(object : Callback<WEATHER> {
                 override fun onResponse(call: Call<WEATHER>, response: Response<WEATHER>) {
                     if (response.isSuccessful) {
                         val it: List<ITEM> = response.body()!!.response.body.items.item
 
-                        val weatherArr = arrayOf(ModelWeather(), ModelWeather(), ModelWeather(), ModelWeather(), ModelWeather(), ModelWeather())
+                        val weatherArr = arrayOf(ModelWeather(), ModelWeather(), ModelWeather(), ModelWeather(), ModelWeather(), ModelWeather(), ModelWeather(), ModelWeather(),ModelWeather(),ModelWeather())
 
                         // 배열 채우기
                         val totalCount = response.body()!!.response.body.totalCount - 1
-//                        for (i in 0..totalCount) {
-//                            when(it[i].category) {
-//                                "REH" -> weatherArr[index].humidity = it[i].fcstValue     // 습도
-//                                "SKY" -> {
-//                                    if (it[i].fcstValue == "1")
-//                                        weatherArr[index].sky = "맑음"
-//                                    else if (it[i].fcstValue == "3")
-//                                        weatherArr[index].sky = "구름"
-//                                    else if (it[i].fcstValue == "4")
-//                                        weatherArr[index].sky = "구름"
-//
-//                                    weatherArr[index].sky = it[i].fcstValue
-//                                }          // 하늘 상태
-//                                "PTY" -> {
-//                                    if (it[i].fcstValue == "0")
-//                                        weatherArr[index].skyform = "없음"
-//                                    else if (it[i].fcstValue == "1")
-//                                        weatherArr[index].skyform = "비"
-//                                    else if(it[i].fcstValue == "2" || it[i].fcstValue == "3")
-//                                        weatherArr[index].skyform = "눈"
-//                                    else if (it[i].fcstValue == "4")
-//                                        weatherArr[index].skyform = "비"
-//                                }          // 강수형태 상태
-//                                "T1H" -> weatherArr[index].temp = it[i].fcstValue         // 기온
-//                                "WSD" -> weatherArr[index].windspeed = it[i].fcstValue         // 풍속
-//                                "POP" -> weatherArr[index].rainPer = it[i].fcstValue         // 강수 확률
-//                                else -> continue
-//                            }
-//                        }
+                        val timecheck: Array<Int> = Array(25) { 0 }
+                        var index = -1
+                        for (i in 0..140) {
+                            val fcsttime : Int = "${it[i].fcstTime[0]}${it[i].fcstTime[1]}".toInt()
+                            if (timecheck[fcsttime] == 0) {
+
+                                timecheck[fcsttime] = 1
+                                index ++
+                                if (index >= 10)
+                                {
+                                    break
+                                }
+                                weatherArr[index].fcstTime = it[i].fcstTime
+
+                                Log.d("test", "${it[i].fcstTime}")
+                            }
+                            when(it[i].category) {
+                                "REH" -> weatherArr[index].humidity = it[i].fcstValue     // 습도
+                                "SKY" -> {
+                                    if (it[i].fcstValue == "1")
+                                        weatherArr[index].sky = "맑음"
+                                    else if (it[i].fcstValue == "3")
+                                        weatherArr[index].sky = "구름"
+                                    else if (it[i].fcstValue == "4")
+                                        weatherArr[index].sky = "구름"
+
+                                    weatherArr[index].sky = it[i].fcstValue
+                                }          // 하늘 상태
+                                "PTY" -> {
+                                    if (it[i].fcstValue == "0")
+                                        weatherArr[index].skyform = "없음"
+                                    else if (it[i].fcstValue == "1")
+                                        weatherArr[index].skyform = "비"
+                                    else if(it[i].fcstValue == "2" || it[i].fcstValue == "3")
+                                        weatherArr[index].skyform = "눈"
+                                    else if (it[i].fcstValue == "4")
+                                        weatherArr[index].skyform = "비"
+                                }          // 강수형태 상태
+                                "TMP" -> weatherArr[index].temp = it[i].fcstValue         // 기온
+                                "WSD" -> weatherArr[index].windspeed = it[i].fcstValue         // 풍속
+                                "POP" -> weatherArr[index].rainPer = it[i].fcstValue         // 강수 확률
+                                else -> continue
+                            }
+                        }
 
                         // 각 날짜 배열 시간 설정
                         for (i in 0..5) weatherArr[i].fcstTime = it[i].fcstTime
-
-                        Log.d("test", "${weatherArr[0].fcstTime}")
 
                         val weatherAdapter = WeatherAdapter(requireContext())
                         binding.rvWeather.adapter= weatherAdapter
