@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.chaebi.MainActivity
+import com.example.chaebi.ui.main.MainActivity
 import com.example.chaebi.R
 import com.example.chaebi.databinding.ActivityLoginBinding
 import com.example.chaebi.ui.login.fragment.RegisterFragment
