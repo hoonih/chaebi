@@ -1,5 +1,6 @@
 package com.example.chaebi.ui.main
 
+import android.icu.text.CaseMap.Title
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import com.example.chaebi.R
 import com.example.chaebi.data.model.ITEM
 import com.example.chaebi.data.model.ModelWeather
 import com.example.chaebi.data.model.WEATHER
+import com.example.chaebi.data.model.cloth
 import com.example.chaebi.databinding.ActivityMainBinding
 import com.example.chaebi.remote.RetrofitClient
 import com.example.chaebi.remote.service.WeatherService
@@ -28,6 +30,35 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
 
 
+    val clothlist = mutableListOf<cloth>()
+    val shirtlist = mutableListOf<cloth>()
+    val pantlist = mutableListOf<cloth>()
+
+    fun putlist(name: String, hottest: Int, select: Int) {
+        var clothput = cloth()
+        clothput.name = name
+        clothput.hottest = hottest
+        clothput.select = select
+        if (select == 1) {
+            clothlist.add(clothput)
+        }
+        if (select == 2) {
+            shirtlist.add(clothput)
+        }
+        if (select == 3) {
+            pantlist.add(clothput)
+        }
+
+    }
+    fun getlist() : Array<cloth> {
+        return clothlist.toTypedArray()
+    }
+    fun getshirtlist() : Array<cloth> {
+        return shirtlist.toTypedArray()
+    }
+    fun getpantlist() : Array<cloth> {
+        return pantlist.toTypedArray()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,6 +66,12 @@ class MainActivity : AppCompatActivity() {
         clickBottomNavigation()
 
 
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fcv_main)
+        if (currentFragment == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fcv_main, WeatherFragment())
+                .commit()
+        }
 
     }
 

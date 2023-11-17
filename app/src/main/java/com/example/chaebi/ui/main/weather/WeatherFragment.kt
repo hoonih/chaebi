@@ -121,8 +121,6 @@ class WeatherFragment : Fragment() {
                                         weatherArr[index].sky = "구름"
                                     else if (it[i].fcstValue == "4")
                                         weatherArr[index].sky = "구름"
-
-                                    weatherArr[index].sky = it[i].fcstValue
                                 }          // 하늘 상태
                                 "PTY" -> {
                                     if (it[i].fcstValue == "0")
@@ -141,8 +139,6 @@ class WeatherFragment : Fragment() {
                             }
                         }
 
-                        // 각 날짜 배열 시간 설정
-                        for (i in 0..5) weatherArr[i].fcstTime = it[i].fcstTime
 
                         val weatherAdapter = WeatherAdapter(requireContext())
                         binding.rvWeather.adapter= weatherAdapter

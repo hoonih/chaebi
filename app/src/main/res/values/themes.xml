@@ -4,6 +4,7 @@
         <item name="colorPrimary">#FFFFFF</item>
         <item name="backgroundColor">#FFFFFF</item>
         <item name="colorSecondaryContainer">#D5E6FF</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>

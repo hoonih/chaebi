@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="224dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tx_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="옷 종류 선택"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/ft_pretendardsb"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        />
+    
+    <ImageView
+        android:id="@+id/iv_cloth1"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/iv_cloth1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_cloth2"
+        app:layout_constraintTop_toBottomOf="@id/tx_title"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="겉옷"
+        android:fontFamily="@font/ft_pretendradmd"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/iv_cloth1"
+        app:layout_constraintEnd_toEndOf="@id/iv_cloth1"
+        app:layout_constraintTop_toBottomOf="@id/iv_cloth1"
+        android:layout_marginTop="4dp"/>
+
+    <ImageView
+        android:id="@+id/iv_cloth2"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/iv_cloth2"
+        app:layout_constraintStart_toEndOf="@id/iv_cloth1"
+        app:layout_constraintEnd_toStartOf="@id/iv_cloth3"
+        app:layout_constraintTop_toBottomOf="@id/tx_title"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/shirt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="셔츠"
+        android:fontFamily="@font/ft_pretendradmd"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/iv_cloth2"
+        app:layout_constraintEnd_toEndOf="@id/iv_cloth2"
+        app:layout_constraintTop_toBottomOf="@id/iv_cloth2"
+        android:layout_marginTop="4dp"/>
+    <ImageView
+        android:id="@+id/iv_cloth3"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/iv_cloth3"
+        app:layout_constraintStart_toEndOf="@id/iv_cloth2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tx_title"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="바지"
+        android:fontFamily="@font/ft_pretendradmd"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/iv_cloth3"
+        app:layout_constraintEnd_toEndOf="@id/iv_cloth3"
+        app:layout_constraintTop_toBottomOf="@id/iv_cloth3"
+        android:layout_marginTop="4dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_register2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/shirt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bt_bluebutton"
+        android:text="등록하기"
+        android:fontFamily="@font/ft_pretendardsb"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="16dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

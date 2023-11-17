@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="112dp"
+    android:layout_height="wrap_content">
+    
+    <TextView
+        android:id="@+id/tx_cloth"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/it_background"
+        android:text="옷"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:fontFamily="@font/ft_pretendardsb"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
