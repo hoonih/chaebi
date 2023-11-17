@@ -130,7 +130,7 @@ class ClothFragment : Fragment() {
                     var adapterlist3 = (activity as MainActivity).getpantlist()
                     val clothAdapter3 = ItemAdapter(requireContext())
                     binding.rvCloth3.adapter= clothAdapter3
-                    clothAdapter2.setFriendList(adapterlist3)
+                    clothAdapter3.setFriendList(adapterlist3)
 
 
 
